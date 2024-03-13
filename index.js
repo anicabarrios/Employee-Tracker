@@ -225,17 +225,79 @@ function addRole() {
       startApp(); 
     });
 }
-
-
-
 // Function to add an employee
 function addEmployee() {
-  // Code for adding an employee
+  inquirer.prompt([
+    {
+      name: 'firstName',
+      type: 'input',
+      message: 'Enter the first name of the employee:'
+    },
+    {
+      name: 'lastName',
+      type: 'input',
+      message: 'Enter the last name of the employee:'
+    },
+    {
+      name: 'roleId',
+      type: 'input',
+      message: 'Enter the role ID of the employee:'
+    },
+    {
+      name: 'managerId',
+      type: 'input',
+      message: 'Enter the manager ID of the employee (leave blank if none):',
+      default: null
+    }
+  ]).then(answers => {
+    const { firstName, lastName, roleId, managerId } = answers;
+
+    const insertQuery = 'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
+    connection.query(insertQuery, [firstName, lastName, roleId, managerId], (err, result) => {
+      if (err) {
+        console.error('Error adding employee:', err);
+        startApp();
+        return;
+      }
+      console.log(`Employee ${firstName} ${lastName} added successfully.`);
+      startApp();
+    });
+  }).catch(err => {
+    console.error('Error adding employee:', err);
+    startApp();
+  });
 }
 
 // Function to update an employee role
 function updateEmployeeRole() {
-  // Code for updating an employee role
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'employeeId',
+      message: 'Enter the ID of the employee whose role you want to update:'
+    },
+    {
+      type: 'input',
+      name: 'newRoleId',
+      message: 'Enter the ID of the new role for the employee:'
+    }
+  ]).then(answers => {
+    const { employeeId, newRoleId } = answers;
+
+    const updateQuery = 'UPDATE employee SET role_id = ? WHERE id = ?';
+    connection.query(updateQuery, [newRoleId, employeeId], (err, result) => {
+      if (err) {
+        console.error('Error updating employee role:', err);
+        startApp(); 
+        return; 
+      }
+      console.log(`Employee's role updated successfully.`);
+      startApp(); 
+    });
+  }).catch(err => {
+    console.error('Error updating employee role:', err);
+    startApp(); 
+  });
 }
 
 // Function to update an employee manager
