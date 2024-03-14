@@ -386,21 +386,30 @@ function deleteDepartment() {
   }).then(answer => {
     const departmentId = answer.departmentId;
 
-    const query = `DELETE FROM department WHERE id = ?`;
-    connection.query(query, [departmentId], (err, res) => {
+    const deleteRolesQuery = `DELETE FROM role WHERE department_id = ?`;
+    connection.query(deleteRolesQuery, [departmentId], (err, res) => {
       if (err) {
-        console.error('Error deleting department:', err);
+        console.error('Error deleting roles associated with the department:', err);
         startApp();
         return;
       }
-      console.log('Department deleted successfully.');
-      startApp();
+      const deleteDepartmentQuery = `DELETE FROM department WHERE id = ?`;
+      connection.query(deleteDepartmentQuery, [departmentId], (err, res) => {
+        if (err) {
+          console.error('Error deleting department:', err);
+          startApp();
+          return;
+        }
+        console.log('Department deleted successfully.');
+        startApp();
+      });
     });
   }).catch(err => {
     console.error('Error deleting department:', err);
     startApp();
   });
 }
+
 
 
 // Function to delete a role
