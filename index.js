@@ -113,26 +113,19 @@ function viewAllRoles() {
 }
 
 // Function to view all employees
-function viewAllEmployees() {
-  console.log('Showing all employees..');
-  const sql = `SELECT employee.id, 
-                      employee.first_name, 
-                      employee.last_name, 
-                      role.title, 
-                      department.name AS department,
-                      role.salary, 
-                      CONCAT (manager.first_name, " ", manager.last_name) AS manager
-               FROM employee
-                      LEFT JOIN role ON employee.role_id = role.id
-                      LEFT JOIN department ON role.department_id = department.id
-                      LEFT JOIN employee manager ON employee.manager_id = manager.id`;
+  function viewAllEmployees() {
+    connection.query('SELECT * FROM employee', (err, res) => {
+      if (err) {
+        console.error('Error fetching employees:', err);
+        startApp();
+        return;
+      }
+      console.table(res);
+      startApp();
+    });
+  }
 
-  connection.query(sql, (err, res) => {
-    if (err) throw err;
-    console.table(res);
-    startApp();
-  });
-}
+
 
 // Function to add a department
 function addDepartment() {
