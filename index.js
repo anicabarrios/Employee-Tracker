@@ -125,8 +125,6 @@ function viewAllRoles() {
     });
   }
 
-
-
 // Function to add a department
 function addDepartment() {
   inquirer.prompt({
@@ -325,7 +323,6 @@ function updateEmployeeManager() {
   });
 }
 
-
 // Function to view employees by manager
 function viewEmployeesByManager() {
   inquirer.prompt({
@@ -350,7 +347,6 @@ function viewEmployeesByManager() {
     startApp();
   });
 }
-
 // Function to view employees by department
 function viewEmployeesByDepartment() {
   inquirer.prompt({
@@ -360,7 +356,22 @@ function viewEmployeesByDepartment() {
   }).then(answer => {
     const departmentId = answer.departmentId;
 
-    const query = `SELECT * FROM employee WHERE role_id IN (SELECT id FROM role WHERE department_id = ?)`;
+    const query = `SELECT employee.id as id,
+                          employee.first_name,
+                          employee.last_name,
+                          role.title,
+                          department.name as department,
+                          role.salary,
+                          CONCAT(managerTable.first_name, ' ', managerTable.last_name) as manager
+                    FROM 
+                      employee 
+                    LEFT JOIN 
+                      role ON employee.role_id = role.id
+                    LEFT JOIN 
+                       department ON role.department_id = department.id
+                    LEFT JOIN 
+                        employee AS managerTable ON employee.manager_id = managerTable.id
+                    WHERE role.department_id= ?`;
     connection.query(query, [departmentId], (err, res) => {
       if (err) {
         console.error('Error fetching employees by department:', err);
@@ -375,8 +386,6 @@ function viewEmployeesByDepartment() {
     startApp();
   });
 }
-
-
 // Function to delete a department
 function deleteDepartment() {
   inquirer.prompt({
@@ -409,8 +418,6 @@ function deleteDepartment() {
     startApp();
   });
 }
-
-
 
 // Function to delete a role
 function deleteRole() {
@@ -461,7 +468,6 @@ function deleteEmployee() {
     startApp();
   });
 }
-
 
 // Function to view total utilized budget of a department
 function viewTotalUtilizedBudget() {

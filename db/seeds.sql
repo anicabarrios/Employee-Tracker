@@ -21,13 +21,13 @@ VALUES ('Sales Lead', 1, 100000),
 -- Insert employees
 INSERT INTO employee(first_name, last_name, role_id)
 VALUES ('John', 'Doe', 1),
-       ('Mike', 'Chan', 1),
-       ('Ashley', 'Rodriguez', 2),
-       ('Kevin', 'Tupik', 2),
-       ('Kunal', 'Singh', 3),
-       ('Malia', 'Brown', 3),
-       ('Sarah', 'Lourd', 4),
-       ('Tom', 'Allen', 4);
+       ('Mike', 'Chan', 2),
+       ('Ashley', 'Rodriguez', 3),
+       ('Kevin', 'Tupik', 4),
+       ('Kunal', 'Singh', 5),
+       ('Malia', 'Brown', 6),
+       ('Sarah', 'Lourd', 7),
+       ('Tom', 'Allen', 8);
 
 -- Update managers
 UPDATE employee SET manager_id = 1 WHERE id = 2;

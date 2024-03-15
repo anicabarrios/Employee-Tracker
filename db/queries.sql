@@ -1,10 +1,8 @@
 USE employee_db;
 
--- Displaying all departments
 SELECT * FROM department;
-
 -- Displaying roles with corresponding departments
-SELECT role.role_id as id, role.title as name, department.name as department, role.salary 
+SELECT role.id as id, role.title as name, department.name as department, role.salary 
 FROM role
 LEFT JOIN department ON role.department_id = department.id;
 
@@ -24,7 +22,6 @@ LEFT JOIN
 LEFT JOIN 
     department ON role.department_id = department.id
 LEFT JOIN 
-    employee AS managerTable ON employee.manager_id = managerTable.id;
+    employee AS managerTable ON employee.manager_id = managerTable.id
+    WHERE role.department_id=1 and employee.role_id = role.id and role.department_id = department.id;
 
--- Displaying all employees
-SELECT * FROM employee;

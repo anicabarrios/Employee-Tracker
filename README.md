@@ -50,7 +50,7 @@ Each selection, once completed, will bring you back to the main menu. To finish 
 ## Demonstration
 Would you like to see the Employee Tracker in action?
 
-Watch this [demo]
+Watch this [link](https://www.loom.com/share/feb0bf4fcb45455e8ea26e1be51e5932?sid=a5c0194f-a988-48c2-8940-766cc7d28e7b)
 
 
 
